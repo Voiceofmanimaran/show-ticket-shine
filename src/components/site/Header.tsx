@@ -62,6 +62,12 @@ export function Header({ onListTicket }: { onListTicket?: () => void }) {
           </div>
 
           <div className="ml-auto flex items-center gap-3">
+            <Link
+              to="/tickets"
+              className="hidden text-sm font-semibold text-muted-foreground transition-colors hover:text-primary sm:inline"
+            >
+              Live Passes
+            </Link>
             <button
               type="button"
               onClick={onListTicket}
