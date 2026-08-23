@@ -74,7 +74,7 @@ export function Header({ onListTicket }: { onListTicket?: () => void }) {
               className="inline-flex items-center gap-1.5 rounded-lg bg-primary px-3.5 py-2 text-sm font-semibold text-primary-foreground transition-colors hover:bg-velvet"
             >
               <Plus className="size-4" aria-hidden />
-              List a Ticket
+              Add a Ticket
             </button>
             <Avatar className="size-9 border border-border">
               <AvatarFallback className="bg-secondary text-xs font-semibold">MM</AvatarFallback>
