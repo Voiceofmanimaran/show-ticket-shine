@@ -11,13 +11,13 @@ import { cn } from "@/lib/utils";
 export const Route = createFileRoute("/")({
   head: () => ({
     meta: [
-      { title: "Ticker Xchanger — Buy, Sell & Exchange Passes in Seconds" },
+      { title: "Ticker Xchanger — Buy, Sell & Exchange Tickets in Seconds" },
       {
         name: "description",
         content:
           "Verified, price-capped event passes. Trade movie, concert, fair and comedy tickets with PassShield protection and FairPass anti-scalping caps.",
       },
-      { property: "og:title", content: "Buy, Sell & Exchange Passes in Seconds" },
+      { property: "og:title", content: "Buy, Sell & Exchange Tickets in Seconds" },
       {
         property: "og:description",
         content: "Verified passes, fair prices, instant secure checkout on Ticker Xchanger.",
@@ -79,7 +79,7 @@ function Index() {
           <h1 className="mt-5 text-5xl leading-[0.95] sm:text-7xl">
             Buy, Sell &amp; Exchange
             <br />
-            <span className="text-primary">Passes in Seconds</span>
+            <span className="text-primary">Tickets in Seconds</span>
           </h1>
           <p className="mx-auto mt-4 max-w-xl text-sm text-muted-foreground sm:text-base">
             Every pass is scan-tested and price-capped. No scalpers, no plot twists — just verified

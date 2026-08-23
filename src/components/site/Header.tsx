@@ -62,13 +62,19 @@ export function Header({ onListTicket }: { onListTicket?: () => void }) {
           </div>
 
           <div className="ml-auto flex items-center gap-3">
+            <Link
+              to="/tickets"
+              className="hidden text-sm font-semibold text-muted-foreground transition-colors hover:text-primary sm:inline"
+            >
+              Live Passes
+            </Link>
             <button
               type="button"
               onClick={onListTicket}
               className="inline-flex items-center gap-1.5 rounded-lg bg-primary px-3.5 py-2 text-sm font-semibold text-primary-foreground transition-colors hover:bg-velvet"
             >
               <Plus className="size-4" aria-hidden />
-              List a Ticket
+              Add a Ticket
             </button>
             <Avatar className="size-9 border border-border">
               <AvatarFallback className="bg-secondary text-xs font-semibold">MM</AvatarFallback>
