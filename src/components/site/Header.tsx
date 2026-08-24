@@ -22,7 +22,8 @@ import { useFilters } from "@/lib/filters";
 import { useAuth } from "@/hooks/use-auth";
 import { cn } from "@/lib/utils";
 
-const HEADER_CATEGORIES = FILTER_TABS.filter((t) => t !== "All");
+// Compact set for the header search bar — all six categories live in the homepage filter pills.
+const HEADER_CATEGORIES = ["Movies", "Concerts", "Local Passes", "Theater"];
 
 const DEALS = [
   { icon: Flame, text: "Amber Lights Live — 4 passes left at face value" },
