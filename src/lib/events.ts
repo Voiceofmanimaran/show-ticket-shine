@@ -179,6 +179,15 @@ export const FILTER_TABS = [
   "Local Passes",
 ] as const;
 
+export const EVENT_CATEGORIES: EventCategory[] = [
+  "Movies",
+  "Concerts",
+  "Live Events",
+  "Theater",
+  "Stand-up Comedy",
+  "Local Passes",
+];
+
 export const ALL_CITIES = "All Cities";
 
 export const CITIES = [

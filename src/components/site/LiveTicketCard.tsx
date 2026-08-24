@@ -23,10 +23,23 @@ export function LiveTicketCard({ ticket }: { ticket: TicketRow }) {
 
       <div className="perforation" />
 
+      <div className="flex flex-wrap items-center gap-1.5">
+        {ticket.category && (
+          <span className="rounded-full bg-accent/20 px-2 py-0.5 text-[10px] font-semibold text-accent-foreground">
+            {ticket.category}
+          </span>
+        )}
+        {ticket.city && (
+          <span className="rounded-full bg-secondary px-2 py-0.5 text-[10px] font-semibold text-secondary-foreground">
+            {ticket.city}
+          </span>
+        )}
+      </div>
+
       <div className="space-y-1 text-sm text-muted-foreground">
         <p className="flex items-center gap-1.5">
           <MapPin className="size-4" aria-hidden />
-          {ticket.theater_name}
+          {ticket.theater_name} {ticket.city ? `· ${ticket.city}` : ""}
         </p>
         <p className="flex items-center gap-1.5">
           <CalendarDays className="size-4" aria-hidden />

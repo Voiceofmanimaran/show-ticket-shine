@@ -1,8 +1,15 @@
-import { createFileRoute } from "@tanstack/react-router";
+import { createFileRoute, redirect } from "@tanstack/react-router";
 import { PostTicketForm } from "@/components/site/PostTicketForm";
 import { TicketsGrid } from "@/components/site/TicketsGrid";
+import { supabase } from "@/supabaseClient";
 
 export const Route = createFileRoute("/tickets")({
+  beforeLoad: async () => {
+    const { data } = await supabase.auth.getSession();
+    if (!data.session) {
+      throw redirect({ to: "/login" });
+    }
+  },
   head: () => ({
     meta: [
       { title: "Live Passes — Ticker Xchanger" },

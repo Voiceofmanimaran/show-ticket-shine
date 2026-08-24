@@ -20,10 +20,21 @@ import {
 import { CITIES } from "@/lib/events";
 import { useFilters } from "@/lib/filters";
 import { useAuth } from "@/hooks/use-auth";
+import { supabase } from "@/supabaseClient";
 import { cn } from "@/lib/utils";
 
-// Compact set for the header search bar — all six categories live in the homepage filter pills.
-const HEADER_CATEGORIES = ["Movies", "Concerts", "Local Passes", "Theater"];
+import { useState } from "react";
+import { AuthModal } from "./AuthModal";
+
+// All six supported event categories
+const HEADER_CATEGORIES = [
+  "Movies",
+  "Concerts",
+  "Live Events",
+  "Theater",
+  "Stand-up Comedy",
+  "Local Passes",
+];
 
 const DEALS = [
   { icon: Flame, text: "Amber Lights Live — 4 passes left at face value" },
@@ -67,7 +78,8 @@ function initialsFor(name: string | undefined, email: string | undefined) {
 }
 
 function AuthArea() {
-  const { user, loading, signInWithGoogle, signOut } = useAuth();
+  const { user, loading, signOut } = useAuth();
+  const [authModalOpen, setAuthModalOpen] = useState(false);
 
   if (loading) {
     return <div className="size-9 animate-pulse rounded-full bg-secondary" aria-hidden />;
@@ -75,19 +87,18 @@ function AuthArea() {
 
   if (!user) {
     return (
-      <button
-        type="button"
-        onClick={() =>
-          signInWithGoogle().catch((e: Error) =>
-            toast.error(`Google sign-in failed: ${e.message}`),
-          )
-        }
-        className="inline-flex items-center gap-2 rounded-lg border border-border bg-card px-3.5 py-2 text-sm font-semibold transition-colors hover:bg-secondary"
-      >
-        <GoogleIcon />
-        <span className="hidden sm:inline">Sign in with Google</span>
-        <span className="sm:hidden">Sign in</span>
-      </button>
+      <>
+        <button
+          type="button"
+          onClick={() => setAuthModalOpen(true)}
+          className="inline-flex items-center gap-2 rounded-lg border border-border bg-card px-3.5 py-2 text-sm font-semibold transition-colors hover:bg-secondary"
+        >
+          <GoogleIcon />
+          <span className="hidden sm:inline">Sign in with Google</span>
+          <span className="sm:hidden">Sign in</span>
+        </button>
+        <AuthModal open={authModalOpen} onOpenChange={setAuthModalOpen} />
+      </>
     );
   }
 
@@ -135,6 +146,16 @@ export function Header({ onListTicket }: { onListTicket?: () => void }) {
   const pickCategory = (c: string) => {
     setCategory(c);
     if (pathname !== "/") void navigate({ to: "/" });
+  };
+
+  const handleAddTicketClick = async () => {
+    const { data } = await supabase.auth.getSession();
+    if (!data.session) {
+      toast.info("Please sign in to list your passes.");
+      void navigate({ to: "/login" });
+    } else if (onListTicket) {
+      onListTicket();
+    }
   };
 
   return (
@@ -206,7 +227,7 @@ export function Header({ onListTicket }: { onListTicket?: () => void }) {
             </Link>
             <button
               type="button"
-              onClick={onListTicket}
+              onClick={handleAddTicketClick}
               className="inline-flex items-center gap-1.5 rounded-lg bg-primary px-3.5 py-2 text-sm font-semibold text-primary-foreground transition-colors hover:bg-velvet"
             >
               <Plus className="size-4" aria-hidden />

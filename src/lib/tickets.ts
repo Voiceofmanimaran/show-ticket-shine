@@ -14,6 +14,9 @@ export type TicketRow = {
   ticket_count: number;
   seller_contact: string;
   status: string | null;
+  category?: string | null;
+  city?: string | null;
+  theatre_name?: string | null;
 };
 
 export type NewTicket = Omit<TicketRow, "id" | "created_at">;

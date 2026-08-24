@@ -3,6 +3,7 @@ import { CalendarDays, MapPin, Search, Sparkles, Ticket, TicketX } from "lucide-
 import { ALL_CITIES, EVENTS, FILTER_TABS } from "@/lib/events";
 import { useFilters } from "@/lib/filters";
 import { TicketCard } from "@/components/site/TicketCard";
+import { TicketsGrid } from "@/components/site/TicketsGrid";
 import { GUARANTEES } from "@/components/site/TrustBadges";
 import stickerTicket from "@/assets/sticker-ticket.png";
 import stickerPopcorn from "@/assets/sticker-popcorn.png";
@@ -158,6 +159,19 @@ function Index() {
             ))}
           </div>
         )}
+
+        <div className="mt-14 border-t border-border pt-10">
+          <div className="mb-6 flex flex-wrap items-center justify-between gap-3">
+            <div>
+              <h3 className="text-2xl sm:text-3xl">Community Live Passes</h3>
+              <p className="text-xs text-muted-foreground">
+                Real-time ticket listings added by verified sellers
+                {city !== ALL_CITIES ? ` in ${city}` : ""}.
+              </p>
+            </div>
+          </div>
+          <TicketsGrid />
+        </div>
       </section>
 
       <section className="border-y border-border bg-card">
