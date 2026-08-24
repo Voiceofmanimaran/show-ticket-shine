@@ -1,7 +1,7 @@
-import { useState } from "react";
 import { createFileRoute } from "@tanstack/react-router";
-import { CalendarDays, MapPin, Search, Sparkles, Ticket } from "lucide-react";
-import { EVENTS, FILTER_TABS } from "@/lib/events";
+import { CalendarDays, MapPin, Search, Sparkles, Ticket, TicketX } from "lucide-react";
+import { ALL_CITIES, EVENTS, FILTER_TABS } from "@/lib/events";
+import { useFilters } from "@/lib/filters";
 import { TicketCard } from "@/components/site/TicketCard";
 import { GUARANTEES } from "@/components/site/TrustBadges";
 import stickerTicket from "@/assets/sticker-ticket.png";
@@ -15,7 +15,7 @@ export const Route = createFileRoute("/")({
       {
         name: "description",
         content:
-          "Verified, price-capped event passes. Trade movie, concert, fair and comedy tickets with PassShield protection and FairPass anti-scalping caps.",
+          "Verified, price-capped event passes. Trade movie, concert, theater, live event, comedy and local pass tickets with PassShield protection and FairPass anti-scalping caps.",
       },
       { property: "og:title", content: "Buy, Sell & Exchange Tickets in Seconds" },
       {
@@ -34,8 +34,15 @@ const quickFields = [
 ];
 
 function Index() {
-  const [tab, setTab] = useState<string>("All");
-  const events = tab === "All" ? EVENTS : EVENTS.filter((e) => e.category === tab);
+  const { query, category, setCategory, city } = useFilters();
+
+  const q = query.trim().toLowerCase();
+  const events = EVENTS.filter(
+    (e) =>
+      (category === "All" || e.category === category) &&
+      (city === ALL_CITIES || e.city === city) &&
+      (!q || `${e.title} ${e.venue} ${e.city} ${e.category}`.toLowerCase().includes(q)),
+  );
 
   return (
     <main>
@@ -113,7 +120,8 @@ function Index() {
           <div>
             <h2 className="text-3xl sm:text-4xl">Featured Passes</h2>
             <p className="mt-1 text-sm text-muted-foreground">
-              Fresh drops from official box offices and verified fans.
+              Fresh drops from official box offices and verified fans
+              {city !== ALL_CITIES ? ` in ${city}` : ""}.
             </p>
           </div>
           <div className="flex flex-wrap gap-2">
@@ -121,10 +129,10 @@ function Index() {
               <button
                 key={t}
                 type="button"
-                onClick={() => setTab(t)}
+                onClick={() => setCategory(t)}
                 className={cn(
                   "rounded-full border px-3.5 py-1.5 text-sm font-medium transition-colors",
-                  tab === t
+                  category === t
                     ? "border-velvet bg-velvet text-velvet-foreground"
                     : "border-border bg-card text-muted-foreground hover:border-accent",
                 )}
@@ -135,11 +143,21 @@ function Index() {
           </div>
         </div>
 
-        <div className="mt-8 grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
-          {events.map((e) => (
-            <TicketCard key={e.id} event={e} />
-          ))}
-        </div>
+        {events.length === 0 ? (
+          <div className="mt-8 flex flex-col items-center gap-3 rounded-2xl border border-dashed border-border py-16 text-center">
+            <TicketX className="size-8 text-muted-foreground" aria-hidden />
+            <p className="text-sm font-semibold">No passes match those filters</p>
+            <p className="text-xs text-muted-foreground">
+              Try another category, city, or clear the search.
+            </p>
+          </div>
+        ) : (
+          <div className="mt-8 grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
+            {events.map((e) => (
+              <TicketCard key={e.id} event={e} />
+            ))}
+          </div>
+        )}
       </section>
 
       <section className="border-y border-border bg-card">
