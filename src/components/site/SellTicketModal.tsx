@@ -39,6 +39,7 @@ export function SellTicketModal({
   const [search, setSearch] = useState("");
   const [picked, setPicked] = useState<string | null>(null);
   const [seat, setSeat] = useState("");
+  const [showTime, setShowTime] = useState("");
   const [uploaded, setUploaded] = useState(false);
   const [originalPrice, setOriginalPrice] = useState(900);
   const [resalePrice, setResalePrice] = useState(850);
@@ -108,6 +109,7 @@ export function SellTicketModal({
                         onClick={() => {
                           setPicked(m.id);
                           setSearch(m.title);
+                          setShowTime(m.startsAt);
                           setOriginalPrice(m.faceValue);
                           setResalePrice(m.faceValue);
                         }}
@@ -128,9 +130,9 @@ export function SellTicketModal({
                 </Field>
                 <Field label="Date & time">
                   <input
-                    readOnly
-                    value={event ? `${event.date} · ${event.time}` : ""}
-                    placeholder="Auto-filled"
+                    type="datetime-local"
+                    value={showTime}
+                    onChange={(e) => setShowTime(e.target.value)}
                     className={inputClass}
                   />
                 </Field>
