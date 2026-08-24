@@ -17,7 +17,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { CITIES, FILTER_TABS } from "@/lib/events";
+import { CITIES } from "@/lib/events";
 import { useFilters } from "@/lib/filters";
 import { useAuth } from "@/hooks/use-auth";
 import { cn } from "@/lib/utils";
