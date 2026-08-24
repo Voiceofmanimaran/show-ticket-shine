@@ -15,6 +15,7 @@ import { Header } from "../components/site/Header";
 import { SellTicketModal } from "../components/site/SellTicketModal";
 import { TooltipProvider } from "../components/ui/tooltip";
 import { Toaster } from "../components/ui/sonner";
+import { FiltersProvider } from "../lib/filters";
 
 function NotFoundComponent() {
   return (
@@ -135,10 +136,12 @@ function RootComponent() {
   return (
     <QueryClientProvider client={queryClient}>
       <TooltipProvider delayDuration={150}>
-        <Header onListTicket={() => setSellOpen(true)} />
-        <SellTicketModal open={sellOpen} onOpenChange={setSellOpen} />
-        {/* Required: nested routes render here. Removing <Outlet /> breaks all child routes. */}
-        <Outlet />
+        <FiltersProvider>
+          <Header onListTicket={() => setSellOpen(true)} />
+          <SellTicketModal open={sellOpen} onOpenChange={setSellOpen} />
+          {/* Required: nested routes render here. Removing <Outlet /> breaks all child routes. */}
+          <Outlet />
+        </FiltersProvider>
         <Toaster />
       </TooltipProvider>
     </QueryClientProvider>
