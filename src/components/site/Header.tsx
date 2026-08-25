@@ -20,7 +20,7 @@ import {
 import { CITIES } from "@/lib/events";
 import { useFilters } from "@/lib/filters";
 import { useAuth } from "@/hooks/use-auth";
-import { supabase } from "@/supabaseClient";
+import { supabase } from "@/lib/supabaseClient";
 import { cn } from "@/lib/utils";
 
 import { useState } from "react";
